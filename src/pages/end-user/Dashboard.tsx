@@ -79,7 +79,7 @@ const Dashboard = () => {
       <hr />
       {userName ? (
         <div>
-          Logged in as {userName}
+          Logged in as:  {userName}
           <br />
           Job Title: {jobTitle}
         </div>

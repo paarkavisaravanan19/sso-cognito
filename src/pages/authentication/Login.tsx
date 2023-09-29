@@ -1,4 +1,4 @@
-import Image from "../../assets/glassbuilding.png";
+import Image from "../../assets/loginimage.png";
 
 const Login = () => {
   const handleLogin = () => {
@@ -6,25 +6,20 @@ const Login = () => {
   };
 
   return (
-    <div className="max-h-screen bg-[#f2f2f2] flex flex-col p-8 justify-center">
-      <div className="rounded-lg bg-white h-[56rem] p-12 pr-0 flex">
-        <div
-          className="flex-grow bg-red-600 rounded-lg bg-no-repeat h-full bg-cover w-1/2"
-          style={{ backgroundImage: `url(${Image})` }}
-        ></div>
+      <div className=" bg-white h-[56rem] p-0 pr-0 flex max-h-screen">
+        <div className="flex-grow hidden lg:block  bg-no-repeat h-full bg-cover w-1/2"
+          style={{ backgroundImage: `url(${Image})` }}></div>
 
-        <div className="flex-grow rounded-r-lg w-1/2 flex flex-col justify-center items-center">
-          <h1 className="text-center p-2">WELCOME TO RETROREVIVE</h1>
-          <p className="p-2">Already a member of Presidio? Login via SSO</p>
+        <div className="flex-grow w-1/2 flex flex-col justify-center items-center">
+          <h1 className="text-center">Welcome to Retro Revive</h1>
+          <p className="p-2 text-xl text-center">Login with your Presidio Credentials to get started </p>
           <button
-            className="mt-10 p-4 bg-[#f2f2f2] rounded-sm"
-            onClick={handleLogin}
-          >
-            SIGN IN WITH MICROSOFT
+            className="mt-10 p-2 text-white bg-[#007EBA] rounded-lg pl-12 pr-12 text-2xl"
+            onClick={handleLogin}>Login with SSO
           </button>
         </div>
       </div>
-    </div>
+    
   );
 };
 

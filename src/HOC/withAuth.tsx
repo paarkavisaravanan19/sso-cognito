@@ -5,9 +5,28 @@ import { useSelector, useDispatch } from "react-redux";
 import { setTokens } from "../features/auth/authSlice";
 import { RootState } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import { AnyAction, Dispatch } from "@reduxjs/toolkit";
 
-const withAuth = (WrappedComponent: React.ComponentType<any>) => {
-  return (props: any) => {
+type JWTResponse = {
+  sub: string
+  'cognito:groups': string[]
+  "iss": string
+  "version": number
+  "client_id": string
+  "origin_jti": string
+  "token_use": string
+  "scope": string
+  "auth_time": number
+  "exp": number
+  "iat": number
+  "jti": string
+  "username": string
+}
+
+
+
+const withAuth = (WrappedComponent: React.ComponentType) => {
+  return (props: object) => {
     const { accessToken, refreshToken, idToken } = useSelector(
       (state: RootState) => state.authStore
     );
@@ -21,8 +40,8 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
         navigate("/");
         return;
       }
-
-      const decodedAccessToken: any = jwt_decode(accessToken);
+      const decodedAccessToken: JWTResponse = jwt_decode(accessToken)
+      
       const expirationTimeInSeconds = decodedAccessToken.exp;
 
       const currentTimeInSeconds = Math.floor(Date.now() / 1000);
@@ -30,8 +49,8 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 
       console.log(timeDifference);
 
-      if (timeDifference <= 21600) {
-        if (timeDifference <= 0) {
+      if ( timeDifference <= 300 ) {
+        if ( timeDifference <= 0 ) {
           localStorage.removeItem("access_token");
           localStorage.removeItem("id_token");
           localStorage.removeItem("refresh_token");
@@ -73,7 +92,7 @@ const withAuth = (WrappedComponent: React.ComponentType<any>) => {
 
 export default withAuth;
 
-const handleRefreshToken = async (refreshToken: string, dispatch: Function) => {
+const handleRefreshToken = async (refreshToken: string, dispatch: Dispatch<AnyAction>) => {
   const clientId = import.meta.env.VITE_COGNITO_CLIENT_ID;
   const clientSecret = import.meta.env.VITE_COGNITO_CLIENT_SECRET;
   const storedRefreshToken = refreshToken;
